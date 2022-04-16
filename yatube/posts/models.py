@@ -33,5 +33,27 @@ class Post(models.Model):
         verbose_name='Группа'
     )
 
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        verbose_name='Статья',
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    author = models.ForeignKey(
+        User,
+        verbose_name='Автор комментария',
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    text = models.TextField(
+        verbose_name='Комментарий',
+    )
+    created = models.DateTimeField(
+        verbose_name='Дата',
+        auto_now_add=True
+    )
+
     def __str__(self):
         return self.text
