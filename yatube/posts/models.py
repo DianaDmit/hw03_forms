@@ -4,13 +4,15 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-class Group (models.Model):
-    title = models.CharField(max_length=200, verbose_name='Название группы')
-    slug = models.SlugField(max_length=255, unique=True,
-                            db_index=True, verbose_name='URL',)
+class Group(models.Model):
+    title = models.CharField(max_length=200, verbose_name='Заголовок')
+    slug = models.SlugField(
+        unique=True,
+        verbose_name='Номер'
+    )
     description = models.TextField(verbose_name='Описание')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -32,6 +34,12 @@ class Post(models.Model):
         related_name='posts',
         verbose_name='Группа'
     )
+
+    class Meta:
+        ordering = ['-pub_date']
+
+    def __str__(self) -> str:
+        return self.text[:15]
 
 
 class Comment(models.Model):
