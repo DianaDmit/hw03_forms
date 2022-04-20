@@ -66,28 +66,29 @@ def post_detail(request, post_id):
 @login_required
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST or None)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            form.save()
-            return redirect('posts:profile', request.user)
-        return render(request, 'posts/create_post.html', {'form': form})
-    form = PostForm()
-    return render(request, 'posts/create_post.html', {'form': form})
+        post.save()
+        return redirect('posts:profile', username=post.author)
+    return render(request, 'posts/create_post.html',
+                  {'form': form, 'username': request.user})
 
 
 @login_required
 def post_edit(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, id=post_id)
     is_edit = True
-    form = PostForm(request.POST or None, instance=post)
-    if post.author == request.user and request.method == 'POST':
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            form.save()
-            return redirect('posts:post_detail', post_id=post_id)
+    form = PostForm(request.POST or None, files=request.FILES or None,
+                    instance=post)
+    if post.author != request.user:
+        return redirect('post:post_detail', post_id=post.id)
+    if form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        form.save()
+        return redirect('posts:post_detail', post_id=post_id)
     return render(
         request,
         'posts/post_create.html',
