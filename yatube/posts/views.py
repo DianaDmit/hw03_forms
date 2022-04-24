@@ -5,8 +5,8 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 
 
-from .models import Post, Group
-from .forms import PostForm, CommentForm
+from .models import Post, Group, User
+from .forms import PostForm
 
 
 User = get_user_model()
