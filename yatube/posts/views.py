@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 
 from .models import Post, Group, User
-from .forms import PostForm
+from .forms import CommentForm, PostForm
 
 
 User = get_user_model()
@@ -40,32 +40,33 @@ def group_posts(request, slug):
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
-    post_list = Post.objects.filter(author=user)
+    post_list = user.posts.all()
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
-    author_posts_numbers = post_list.count()
     page_obj = paginator.get_page(page_number)
     posts_count = Post.objects.filter(author=user).count()
+    posts_numbers = post_list.count()
+
     context = {
         'user': user,
         'posts_list': post_list,
         'posts_count': posts_count,
         'page_obj': page_obj,
-        'author_posts_numbers': author_posts_numbers,
+        'posts_numbers': posts_numbers,
     }
     return render(request, 'posts/profile.html', context)
 
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    comments = post.comments.all()
+    form = CommentForm()
     author = post.author
-    author_posts = author.posts
-    count_posts = author_posts.count()
     context = {
         'author': author,
-        'title': post.text,
         'post': post,
-        'count_posts': count_posts,
+        'comments': comments,
+        'form': form,
     }
     return render(request, 'posts/post_detail.html', context)
 
