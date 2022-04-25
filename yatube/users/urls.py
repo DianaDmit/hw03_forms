@@ -6,10 +6,7 @@ app_name = 'users'
 
 urlpatterns = [
     # Форма регистрации на сайте
-    path(
-        'signup/', views.SignUp.as_view(template_name='users/signup.html'),
-        name='signup'
-    ),
+    path('signup/', views.SignUp.as_view(), name='signup'),
     # Форма после выхода из учетной записи
     path(
         'logout/',
@@ -24,7 +21,7 @@ urlpatterns = [
     ),
     # Форма сброса пароля
     path(
-        'passwordreset/',
+        'password_reset/',
         PasswordResetView.as_view(template_name='users/'
                                                 'password_reset_form.html'),
         name='password_reset_form'
