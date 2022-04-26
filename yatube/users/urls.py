@@ -6,7 +6,7 @@ app_name = 'users'
 
 urlpatterns = [
     # Форма регистрации на сайте
-    path('signup/', views.SignUp.as_view(), name='signup'),
+    path('signup/', views.SignUp.as_view(template_name='users/signup.html'), name='signup'),
     # Форма после выхода из учетной записи
     path(
         'logout/',
