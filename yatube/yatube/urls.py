@@ -21,7 +21,6 @@ urlpatterns = [
     path('about/', include('about.urls', namespace='about')),
     path('auth/', include('users.urls', namespace='users')),
     path('auth/', include('django.contrib.auth.urls')),
-    path('auth/', include('django.contrib.auth.urls')),
     path('', include('posts.urls')),
     path('', include('posts.urls', namespace='group_list')),
     path('', include('posts.urls', namespace='group_detail')),
