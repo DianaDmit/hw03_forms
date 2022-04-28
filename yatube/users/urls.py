@@ -25,20 +25,17 @@ urlpatterns = [
     path('password_reset/',
          PasswordResetView.as_view
          (template_name='users/password_reset.html'),
-         name='password_reset_form'
+         name='password_reset'
         ),
     path('password_change/',
          PasswordChangeView.as_view
          (template_name='users/password_change.html'),
-         name='password_change_form',
+         name='password_change',
         ),
 
     path('password_change/done/', PasswordChangeDoneView.as_view
     (template_name='users/password_change_done.html'),
 
-    ),
-    path('password_reset/', PasswordResetView.as_view
-    (template_name='users/password_reset.html'),
     ),
 
     path('password_reset/done/', PasswordResetDoneView.as_view

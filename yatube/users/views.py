@@ -16,4 +16,4 @@ class PasswordReset(CreateView):
     form_class = CreationForm
     # После отправки письма перенаправляем пользователя на главную.
     success_url = reverse_lazy('posts:index')
-    template_name = 'users/password_reset_form.html'
+    template_name = 'users/password_reset.html'
