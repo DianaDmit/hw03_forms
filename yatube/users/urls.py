@@ -24,12 +24,12 @@ urlpatterns = [
     # Форма сброса пароля
     path('password_reset/',
          PasswordResetView.as_view
-         (template_name='users/password_reset_form.html'),
+         (template_name='users/password_reset.html'),
          name='password_reset_form'
         ),
     path('password_change/',
          PasswordChangeView.as_view
-         (template_name='users/password_change_form.html'),
+         (template_name='users/password_change.html'),
          name='password_change_form',
         ),
 
@@ -38,7 +38,7 @@ urlpatterns = [
 
     ),
     path('password_reset/', PasswordResetView.as_view
-    (template_name='users/password_reset_form.html'),
+    (template_name='users/password_reset.html'),
     ),
 
     path('password_reset/done/', PasswordResetDoneView.as_view
