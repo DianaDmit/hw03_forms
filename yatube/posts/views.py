@@ -9,9 +9,6 @@ from .models import Post, Group, User
 from .forms import CommentForm, PostForm
 
 
-User = get_user_model()
-
-
 def index(request):
     post_list = Post.objects.all().order_by('-pub_date')
     paginator = Paginator(post_list, 10)
@@ -73,14 +70,16 @@ def post_detail(request, post_id):
 
 @login_required
 def post_create(request):
+    request.method == 'POST'
     form = PostForm(request.POST or None,
                     files=request.FILES or None)
-    if form.is_valid():
-        post = form.save(commit=False)
-        post.author = request.user
-        post.save()
-        return redirect('posts:profile', str(request.user))
-    return render(request, 'posts/post_create.html', {'form': form})
+    if not form.is_valid():
+        return render(request, 'posts/post_create.html', {'form': form})
+    post = form.save(commit=False)
+    post.author = request.user
+    post.save()
+    return redirect('posts:profile', username=post.author)
+
 
 
 @login_required
