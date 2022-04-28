@@ -81,7 +81,6 @@ def post_create(request):
     return redirect('posts:profile', username=post.author)
 
 
-
 @login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -96,4 +95,3 @@ def post_edit(request, post_id):
         post.save()
         return redirect('posts:post_detail', post.pk)
     return redirect('posts:post_detail', post.pk)
-
