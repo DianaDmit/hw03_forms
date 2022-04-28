@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 
 
@@ -84,14 +83,22 @@ def post_create(request):
 @login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+
     is_edit = True
-    if request.user == post.author:
-        request.method == 'POST'
-        form = PostForm(request.POST or None,
-                        files=request.FILES or None, instance=post)
-        if not form.is_valid():
-            return render(request, 'posts/post_create.html',
-                          {'form': form, 'is_edit': is_edit, 'post': post})
+    if post.author != request.user:
+        return redirect('posts:post_detail', post_id=post.pk)
+
+    form = PostForm(request.POST or None, instance=post)
+    if form.is_valid():
+        post = post.save(commit=False)
+        post.author = request.user
         post.save()
-        return redirect('posts:post_detail', post.pk)
-    return redirect('posts:post_detail', post.pk)
+        return redirect('posts:post_detail', post_id=post.pk)
+
+    context = {
+        'form': form,
+        'is_edit': is_edit,
+        'post': post,
+    }
+
+    return render(request, 'posts/post_create.html', context)
