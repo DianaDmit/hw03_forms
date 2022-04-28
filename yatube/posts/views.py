@@ -48,7 +48,7 @@ def profile(request, username):
     posts_numbers = post_list.count()
 
     context = {
-        'user': user,
+        'author': user,
         'posts_list': post_list,
         'posts_count': posts_count,
         'page_obj': page_obj,
