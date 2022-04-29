@@ -10,9 +10,10 @@ app_name = 'users'
 
 urlpatterns = [
     # Форма регистрации на сайте
-    path('signup/',
-         views.SignUp.as_view(template_name='users/signup.html'),
-         name='signup'
+    path(
+        'signup/',
+        views.SignUp.as_view(template_name='users/signup.html'),
+        name='signup'
         ),
     # Форма после выхода из учетной записи
     path(
@@ -27,30 +28,36 @@ urlpatterns = [
         name='login'
         ),
     # Форма сброса пароля
-    path('password_reset/',
-         PasswordResetView.as_view
-         (template_name='users/password_reset.html'),
-         name='password_reset'
+    path(
+        'password_reset/',
+        PasswordResetView.as_view
+        (template_name='users/password_reset.html'),
+        name='password_reset'
         ),
-    path('password_change/',
-         PasswordChangeView.as_view
-         (template_name='users/password_change.html'),
-         name='password_change',
-        ),
-
-    path('password_change/done/', PasswordChangeDoneView.as_view
-    (template_name='users/password_change_done.html'),
+    path(
+        'password_change/',
+        PasswordChangeView.as_view
+        (template_name='users/password_change.html'),
+        name='password_change',
         ),
 
-    path('password_reset/done/', PasswordResetDoneView.as_view
-    (template_name='users/password_reset_done.html'),
+    path(
+        'password_change/done/', PasswordChangeDoneView.as_view
+        (template_name='users/password_change_done.html'),
         ),
 
-    path('reset/<uidb64>/<token>/', PasswordChangeView.as_view
-    (template_name='users/password_reset_confirm.html'),
+    path(
+        'password_reset/done/', PasswordResetDoneView.as_view
+        (template_name='users/password_reset_done.html'),
         ),
 
-    path('reset/done/', PasswordResetCompleteView.as_view
-    (template_name='users/password_reset_complete.html'),
+    path(
+        'reset/<uidb64>/<token>/', PasswordChangeView.as_view
+        (template_name='users/password_reset_confirm.html'),
+        ),
+
+    path(
+        'reset/done/', PasswordResetCompleteView.as_view
+        (template_name='users/password_reset_complete.html'),
         ),
 ]
