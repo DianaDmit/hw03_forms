@@ -1,6 +1,8 @@
-from django.contrib.auth.views import LogoutView, LoginView, PasswordChangeDoneView
+from django.contrib.auth.views import LogoutView, LoginView
+from django.contrib.auth.views import PasswordChangeDoneView
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView
-from django.contrib.auth.views import PasswordResetCompleteView, PasswordChangeView
+from django.contrib.auth.views import PasswordResetCompleteView
 from django.urls import path
 from . import views
 
@@ -8,7 +10,10 @@ app_name = 'users'
 
 urlpatterns = [
     # Форма регистрации на сайте
-    path('signup/', views.SignUp.as_view(template_name='users/signup.html'), name='signup'),
+    path('signup/',
+         views.SignUp.as_view(template_name='users/signup.html'),
+         name='signup'
+    ),
     # Форма после выхода из учетной записи
     path(
         'logout/',
