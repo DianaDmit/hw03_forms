@@ -1,7 +1,5 @@
-<!DOCTYPE html>
 {% extends 'base.html' %}
 {% load static %}
-<html lang="ru">
 {% block title %}Профайл пользователя {{ user.get_full_name }}{% endblock %}
   {% block content %}
   <body>
@@ -44,9 +42,4 @@
         {% endblock %}
       </div>
     </main>
-
-    <footer class="border-top text-center py-3">
-      <p>© <!--2021 --> Copyright <span style="color:red">Ya</span>tube</p>
-    </footer>
   </body>
-</html>
